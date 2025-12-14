@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Clone</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav id="navbar" style="display: none;">
+        <h2>Instagram Clone</h2>
+        <div>
+            <a href="#" onclick="showFeed()">Feed</a>
+            <a href="#" onclick="showCreatePost()">Create Post</a>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div id="auth-container">
+        <div class="auth-box">
+            <h2 id="auth-title">Login</h2>
+            <div id="auth-error" class="error" style="display: none;"></div>
+            
+            <form id="auth-form">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="email" id="email" placeholder="Email" style="display: none;">
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" id="auth-submit">Login</button>
+            </form>
+            
+            <p id="auth-switch">
+                Don't have an account? 
+                <a href="#" onclick="toggleAuth()">Sign up</a>
+            </p>
+        </div>
+    </div>
+
+    <div id="main-container" style="display: none;">
+        <div id="feed-view" style="display: none;">
+            <h2>Feed</h2>
+            <div id="feed-posts"></div>
+        </div>
+
+        <div id="create-post-view" style="display: none;">
+            <h2>Create New Post</h2>
+            <div id="create-error" class="error" style="display: none;"></div>
+            <form id="create-post-form">
+                <input type="url" id="image-url" placeholder="Image URL" required>
+                <textarea id="caption" placeholder="Caption (optional)" rows="4"></textarea>
+                <button type="submit">Post</button>
+            </form>
+        </div>
+        <div id="profile-view" style="display: none;">
+            <div id="profile-content"></div>
+        </div>
+        <div id="post-detail-view" style="display: none;">
+            <div id="post-detail-content"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
