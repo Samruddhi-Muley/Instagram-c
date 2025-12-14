@@ -1,20 +1,20 @@
-**Instagram Clone**
+# INSTAGRAM CLONE
 A mini Instagram-style social media application built with Python Flask backend and vanilla JavaScript frontend.
 
-**# Features**
+# FEATURES
 User Authentication
 User signup with email, username, and password
 Password hashing using bcrypt for security
 Token-based session management
 
-**# Social Features**
+# SOCIAL FEATURES
 Follow System: Users can follow and unfollow other users
 Posts: Create posts with image URLs and captions
 Likes: Like and unlike posts
 Feed: Personalized feed showing posts from followed users only
 User Profiles: View user profiles with post grid, follower/following counts
 
-**# Tech Stack**
+# TECH STACK
 
 **1. Backend**
 Python 3.x
@@ -32,7 +32,7 @@ Vanilla JavaScript (ES6+)
 Fetch API for HTTP requests
 
 
-**# Database Schema**
+# DATABASE DESIGN
 
 **1. Users Table**
 id (Primary Key)
@@ -49,12 +49,11 @@ user_id (Foreign Key → Users)
 created_at
 
 
-**# Relationships**
+# REALATIONSHIPS
 Followers (Many-to-Many): Users ↔ Users
 Likes (Many-to-Many): Users ↔ Posts
 
-**# Installation & Setup**
-
+# INSTALLATION & SETUP
 **1. Prerequisites**
 Python 3.7 or higher
 pip (Python package manager)
@@ -80,7 +79,7 @@ bash   python -m http.server 8000
 Open your browser
 Go to: http://localhost:8000
 
-**# Usage Guide**
+# USAGE GUIDE
 1. Create an Account
 
 Open the application
@@ -105,12 +104,12 @@ Create multiple accounts in different browser tabs
 Visit user profiles and click "Follow"
 
 
-**Security Notes**
+# NOTES FOR SECURITY
 *Do NOT use in production without:*
-Changing the JWT secret key in app.py
-Implementing proper password requirements
-Setting up HTTPS
-Implementing rate limiting
-Using environment variables for secrets
+1.Changing the JWT secret key in app.py,
+2. Implementing proper password requirements
+3. Setting up HTTPS
+4. Implementing rate limiting
+5. Using environment variables for secrets
 
 Note: This application uses SQLite for simplicity. For production use, consider PostgreSQL or MySQL.
