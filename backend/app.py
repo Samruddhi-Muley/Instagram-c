@@ -1,56 +1,43 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from flask_bcrypt import Bcrypt
-from models import db, User, Post, Comment
 from datetime import timedelta
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from models import db, User, Post, Comment
 
 app = Flask(__name__)
 CORS(app)
-
-# Configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instagram.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'your-secret-key-change-this'
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=1)
-
-# Initialize extensions
 db.init_app(app)
 jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
 
-# Create tables
+
 with app.app_context():
     db.create_all()
-
-# ============= AUTH ROUTES =============
 
 @app.route('/api/signup', methods=['POST'])
 def signup():
     try:
         data = request.get_json()
-        
-        # Check if user exists
         if User.query.filter_by(username=data['username']).first():
             return jsonify({'error': 'Username already exists'}), 400
         
         if User.query.filter_by(email=data['email']).first():
             return jsonify({'error': 'Email already exists'}), 400
         
-        # Hash password
         hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
         
-        # Create user
         user = User(
             username=data['username'],
             email=data['email'],
             password=hashed_password
         )
-        
         db.session.add(user)
         db.session.commit()
-        
-        # Create token
         token = create_access_token(identity=user.id)
         
         return jsonify({
@@ -69,14 +56,11 @@ def signup():
 def login():
     try:
         data = request.get_json()
-        
-        # Find user
         user = User.query.filter_by(username=data['username']).first()
         
         if not user or not bcrypt.check_password_hash(user.password, data['password']):
             return jsonify({'error': 'Invalid credentials'}), 401
-        
-        # Create token
+
         token = create_access_token(identity=user.id)
         
         return jsonify({
@@ -91,26 +75,20 @@ def login():
         print(f"Login error: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
-# ============= POST ROUTES =============
-
 @app.route('/api/posts', methods=['POST'])
 @jwt_required()
 def create_post():
     try:
         user_id = get_jwt_identity()
         data = request.get_json()
-        
         print(f"Creating post for user {user_id}: {data}")
-        
         post = Post(
             image_url=data['image_url'],
             caption=data.get('caption', ''),
             user_id=user_id
         )
-        
         db.session.add(post)
         db.session.commit()
-        
         return jsonify({
             'id': post.id,
             'image_url': post.image_url,
@@ -151,7 +129,6 @@ def get_post(post_id):
         print(f"Get post error: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
-# ============= FEED ROUTE =============
 
 @app.route('/api/feed', methods=['GET'])
 @jwt_required()
@@ -160,7 +137,6 @@ def get_feed():
         user_id = get_jwt_identity()
         user = User.query.get(user_id)
         
-        # Get posts from followed users
         following_ids = [u.id for u in user.following.all()]
         
         if not following_ids:
@@ -184,8 +160,6 @@ def get_feed():
     except Exception as e:
         print(f"Feed error: {str(e)}")
         return jsonify({'error': str(e)}), 500
-
-# ============= LIKE ROUTES =============
 
 @app.route('/api/posts/<int:post_id>/like', methods=['POST'])
 @jwt_required()
@@ -221,8 +195,6 @@ def unlike_post(post_id):
         print(f"Unlike error: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
-# ============= COMMENT ROUTES =============
-
 @app.route('/api/posts/<int:post_id>/comments', methods=['POST'])
 @jwt_required()
 def add_comment(post_id):
@@ -248,8 +220,6 @@ def add_comment(post_id):
     except Exception as e:
         print(f"Comment error: {str(e)}")
         return jsonify({'error': str(e)}), 500
-
-# ============= FOLLOW ROUTES =============
 
 @app.route('/api/users/<int:user_id>/follow', methods=['POST'])
 @jwt_required()
@@ -285,7 +255,6 @@ def unfollow_user(user_id):
         print(f"Unfollow error: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
-# ============= PROFILE ROUTES =============
 
 @app.route('/api/users/<int:user_id>', methods=['GET'])
 @jwt_required()
