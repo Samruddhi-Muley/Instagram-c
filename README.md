@@ -1,22 +1,22 @@
 **Instagram Clone**
 A mini Instagram-style social media application built with Python Flask backend and vanilla JavaScript frontend.
 
-**Features**
+**# Features**
 User Authentication
 User signup with email, username, and password
 Password hashing using bcrypt for security
 Token-based session management
 
-**Social Features**
+**# Social Features**
 Follow System: Users can follow and unfollow other users
 Posts: Create posts with image URLs and captions
 Likes: Like and unlike posts
 Feed: Personalized feed showing posts from followed users only
 User Profiles: View user profiles with post grid, follower/following counts
 
-**Tech Stack**
+**# Tech Stack**
 
-**Backend**
+**1. Backend**
 Python 3.x
 Flask - Web framework
 Flask-SQLAlchemy - ORM for database operations
@@ -25,35 +25,23 @@ Flask-Bcrypt - Password hashing
 Flask-CORS - Cross-origin resource sharing
 SQLite - Database
 
-**Frontend**
+**2. Frontend**
 HTML5
 CSS3
 Vanilla JavaScript (ES6+)
 Fetch API for HTTP requests
 
-**Project Structure**
-instagram-clone/
-├── backend/
-│   ├── app.py              # Main Flask application
-│   ├── models.py           # Database models
-│   ├── instagram.db        # SQLite database (auto-generated)
-│   └── venv/               # Python virtual environment
-├── frontend/
-│   ├── index.html          # Main HTML file
-│   ├── style.css           # Styling
-│   └── app.js              # Frontend JavaScript logic
-└── README.md
 
-**Database Schema**
+**# Database Schema**
 
-**Users Table**
+**1. Users Table**
 id (Primary Key)
 username (Unique)
 email (Unique)
 password (Hashed)
 created_at
 
-**Posts Table**
+**2. Posts Table**
 id (Primary Key)
 image_url
 caption
@@ -61,11 +49,11 @@ user_id (Foreign Key → Users)
 created_at
 
 
-**Relationships**
+**# Relationships**
 Followers (Many-to-Many): Users ↔ Users
 Likes (Many-to-Many): Users ↔ Posts
 
-**Installation & Setup**
+**# Installation & Setup**
 
 **1. Prerequisites**
 Python 3.7 or higher
@@ -92,7 +80,7 @@ bash   python -m http.server 8000
 Open your browser
 Go to: http://localhost:8000
 
-**Usage Guide**
+**# Usage Guide**
 1. Create an Account
 
 Open the application
