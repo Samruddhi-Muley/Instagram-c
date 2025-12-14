@@ -125,7 +125,4 @@ Setting up HTTPS
 Implementing rate limiting
 Using environment variables for secrets
 
-Author
-Created as a learning project for full-stack web development.
-
 Note: This application uses SQLite for simplicity. For production use, consider PostgreSQL or MySQL.
